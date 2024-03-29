@@ -1,5 +1,3 @@
-import { Raxis } from '../raxis';
-
 declare const AssetId: unique symbol;
 export type HandleId<T> = PropertyKey & { [AssetId]: T };
 
