@@ -28,6 +28,7 @@ export class Raxis {
 	private startup: SystemContext[];
 	private update: SystemContext[];
 	private shutdown: SystemContext[];
+	private allSystems: WeakMap<RaxisSystem | RaxisSystemAsync, SystemContext>;
 
 	private externalContext: SystemContext;
 	private currentContext: SystemContext;
@@ -75,6 +76,8 @@ export class Raxis {
 
 		this.shutdown = [...shutdown.map((fn) => new SystemContext(fn, this.events.keys, 'shutdown'))];
 
+		this.allSystems = new WeakMap([...this.startup, ...this.update, ...this.shutdown].map((ctx) => [ctx.fn, ctx]));
+
 		this.cycle = 0;
 		this.elapsed = 0;
 		this.loopID = none;
@@ -94,25 +97,22 @@ export class Raxis {
 	/**
 	 * @description Enables the specified system
 	 */
-	enable(system: RaxisSystem): void {
-		console.log(system);
-		throw new Error();
+	enable(system: RaxisSystem | RaxisSystemAsync): void {
+		wrap(this.allSystems.get(system)).some((ctx) => (ctx.enabled = true));
 	}
 
 	/**
 	 * @description Disables the specified system
 	 */
 	disable(system: RaxisSystem): void {
-		console.log(system);
-		throw new Error();
+		wrap(this.allSystems.get(system)).some((ctx) => (ctx.enabled = false));
 	}
 
 	/**
 	 * @description Toggles the specified system on or off
 	 */
 	toggle(system: RaxisSystem): void {
-		console.log(system);
-		throw new Error();
+		wrap(this.allSystems.get(system)).some((ctx) => (ctx.enabled = !ctx.enabled));
 	}
 
 	/**
@@ -162,7 +162,7 @@ export class Raxis {
 	 * }
 	 * ```
 	 */
-	noUnread(type: EventType): boolean {
+	noneAvailableOf(type: EventType): boolean {
 		const manager = this.events.getManager(type);
 		const key = this.events.keyOf(type);
 		const offset = this.currentContext.eventOffsets[key] ?? 0;
@@ -181,7 +181,7 @@ export class Raxis {
 	 * }
 	 * ```
 	 */
-	read<T extends EventType>(type: T): IterableIterator<EventData<T>> {
+	poll<T extends EventType>(type: T): IterableIterator<EventData<T>> {
 		const manager = this.events.getManager(type);
 		const key = this.events.keyOf(type);
 		const index = this.currentContext.eventOffsets[key] as number;
@@ -192,7 +192,7 @@ export class Raxis {
 	/**
 	 * @description Pushes a new event
 	 */
-	push<K extends EventType>(event: EventData<K>): void {
+	dispatch<K extends EventType>(event: EventData<K>): void {
 		this.events.dispatchEvent(event);
 	}
 

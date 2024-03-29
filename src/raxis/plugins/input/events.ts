@@ -82,9 +82,9 @@ export class KeyupEvent {
 
 export function setupEvents(r: Raxis) {
 	window.addEventListener('keydown', (e) => {
-		if (!e.repeat) r.push(new KeydownEvent(e));
+		if (!e.repeat) r.dispatch(new KeydownEvent(e));
 	});
 	window.addEventListener('keyup', (e) => {
-		r.push(new KeyupEvent(e));
+		r.dispatch(new KeyupEvent(e));
 	});
 }

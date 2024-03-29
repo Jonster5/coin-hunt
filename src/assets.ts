@@ -1,5 +1,12 @@
-import { Handle, none, Option } from './raxis';
+import { Handle, none, Option, Raxis } from './raxis';
+import { ImageAssetSrc } from './raxis/plugins/graphics/renderers/canvas';
 
 export class GameAssets {
-	square: Option<Handle<ImageBitmap[]>> = none;
+	jerry: Option<Handle<ImageBitmap[]>> = none;
 }
+
+export const gameAssetsSource = {
+	jerry: ['jerry.jpg'] as ImageAssetSrc,
+};
+
+export const AssetsPlugin = new Raxis.Builder().useGlobal(GameAssets);

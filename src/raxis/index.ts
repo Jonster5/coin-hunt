@@ -33,6 +33,5 @@ export const DefaultPlugin = new Raxis.Builder()
 	.use(TimePlugin)
 	.use(TransformPlugin)
 	.use(InputPlugin)
-	.use(AssetsPlugin)
 	.use(GraphicsPlugin);
 // .use(AudioPlugin);

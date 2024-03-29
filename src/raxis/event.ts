@@ -24,7 +24,7 @@ export class EventRegistry {
 	}
 
 	keyOf(type: EventType): ValidEventKey {
-		const key = typeof type === 'string' ? type : type.constructor.name;
+		const key = typeof type === 'string' ? type : type.name;
 		this.checkTypeKey(key);
 		return key;
 	}
@@ -41,7 +41,7 @@ export class EventRegistry {
 		return this.store[key] as EventManager<T>;
 	}
 
-	dispatchEvent(event: EventData) {
+	dispatchEvent(event: EventData<EventType>) {
 		const key = this.keyOf(typeof event === 'string' ? event : event.constructor.name);
 
 		const manager = this.store[key] as EventManager;

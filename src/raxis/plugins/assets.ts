@@ -43,5 +43,3 @@ export async function load<S, R>(loader: AssetLoader<S, R>, src: S): Promise<Han
 export async function load<S, R>(loader: AssetLoader<S, R>, a: S): Promise<unknown> {
 	return await loader.loadAsset(a);
 }
-
-export const AssetsPlugin = new Raxis.Builder();
