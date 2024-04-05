@@ -231,7 +231,7 @@ export class QueryResults<Q extends Query = Query> {
 		}
 	}
 
-	singleUnsafe(): ExtractResultsFrom<Q> {
+	expectSingle(): ExtractResultsFrom<Q> {
 		if (this.eids.size === 0) {
 			throw new RaxisError('No Results Available In Query', this.query);
 		} else if (this.eids.size > 1) {

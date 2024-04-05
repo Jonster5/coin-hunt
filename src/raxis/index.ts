@@ -13,15 +13,16 @@ export * from './types';
 
 export { Vec2, type Vec2Like, Tree, type ColorValue } from './structures';
 
-export { type Option, Some, None, some, none, wrap, all } from './option';
+export { Option, Some, None, some, none, wrap } from './option';
 
-import { AssetsPlugin } from './plugins/assets';
 import { GraphicsPlugin } from './plugins/graphics';
 import { InputPlugin } from './plugins/input';
 import { TimePlugin } from './plugins/time';
 import { TransformPlugin } from './plugins/transform';
+import { TweenPlugin } from './plugins/tween';
 import { Raxis } from './raxis';
 
+export * from './plugins/tween';
 export * from './plugins/time';
 export * from './plugins/transform';
 export * from './plugins/input';
@@ -33,5 +34,6 @@ export const DefaultPlugin = new Raxis.Builder()
 	.use(TimePlugin)
 	.use(TransformPlugin)
 	.use(InputPlugin)
-	.use(GraphicsPlugin);
+	.use(GraphicsPlugin)
+	.use(TweenPlugin);
 // .use(AudioPlugin);

@@ -1,8 +1,7 @@
 import { A } from 'ts-toolbelt';
 import { GlobalTransform, Transform } from '../transform';
-import { Entity, HasNoParent, Raxis } from '../..';
+import { Entity, HasNoParent, Raxis, Option } from '../..';
 import { Handle } from '../assets';
-import { all } from '../../option';
 import { ColorValue } from '../../structures';
 
 export type SpriteAnchor =
@@ -93,7 +92,7 @@ export const SpriteBundle = (comps: {
 export function updateGlobalVisibility(r: Raxis) {
 	const queue: Entity[] = [];
 
-	for (const [v, gv, e] of r.query([Visibility, GlobalVisibility, Entity], HasNoParent())) {
+	for (const [v, gv, e] of r.query([Visibility, GlobalVisibility, Raxis.Entity], HasNoParent())) {
 		gv.value = v.value === 'hidden' ? 'hidden' : 'visible';
 
 		for (const child of e.children()) {
@@ -105,7 +104,7 @@ export function updateGlobalVisibility(r: Raxis) {
 		const e = queue.shift();
 		if (e === undefined) break;
 
-		all([
+		Option.all([
 			e.access(Visibility),
 			e.access(GlobalVisibility),
 			e

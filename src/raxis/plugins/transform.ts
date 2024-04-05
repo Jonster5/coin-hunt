@@ -1,5 +1,4 @@
-import { all } from '../option';
-import { Entity, HasNoParent, Raxis } from '..';
+import { Entity, HasNoParent, Raxis, Option } from '..';
 import { Vec2 } from '../structures';
 
 export class Transform {
@@ -90,7 +89,7 @@ function updateGlobalTransforms(r: Raxis) {
 		const e = queue.shift();
 		if (e === undefined) break;
 
-		all([
+		Option.all([
 			e.access(Transform),
 			e.access(GlobalTransform),
 			e

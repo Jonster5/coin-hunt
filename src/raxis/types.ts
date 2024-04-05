@@ -27,11 +27,8 @@ export type EventType<T extends object | string = object | string> = T extends o
 	: T extends string
 	? T
 	: never;
-export type EventData<T extends EventType> = T extends string ? T : T extends EventType<infer I> ? I : never;
 
-export type RecievedEvent<T extends EventType = EventType> = T extends string
-	? { name: string }
-	: { name: string; data: EventData<T> };
+export type EventData<T extends EventType> = T extends string ? T : T extends GenericConstructor<infer I> ? I : never;
 
 export type Global = {
 	beforeStartup?(): void;

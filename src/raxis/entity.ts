@@ -1,4 +1,4 @@
-import { Option, wrap, none, all } from './option';
+import { Option, wrap, none } from './option';
 import { Tree } from './structures';
 import { ComponentRegistry } from './component';
 import { Raxis } from './raxis';
@@ -67,11 +67,26 @@ export class Entity {
 
 		if (Array.isArray(a)) {
 			for (const t of a) {
+				if (typeof t === 'symbol') {
+					if (this.ereg.unique_tags.has(t))
+						throw new RaxisError('Unique tag applied to more than one entity', t);
+					this.ereg.unique_tags.add(t);
+				}
 				this.tags.add(t);
 			}
 		} else {
+			if (typeof a === 'symbol') {
+				if (this.ereg.unique_tags.has(a)) throw new RaxisError('Unique tag applied to more than one entity', a);
+				this.ereg.unique_tags.add(a);
+			}
 			this.tags.add(a);
+
 			for (const t of b) {
+				if (typeof t === 'symbol') {
+					if (this.ereg.unique_tags.has(t))
+						throw new RaxisError('Unique tag applied to more than one entity', t);
+					this.ereg.unique_tags.add(t);
+				}
 				this.tags.add(t);
 			}
 		}
@@ -91,6 +106,7 @@ export class Entity {
 		this.check();
 
 		this.tags.delete(t);
+		if (typeof t === 'symbol') this.ereg.unique_tags.delete(t);
 
 		this.ereg.validateQueries(this.eid);
 
@@ -118,7 +134,7 @@ export class Entity {
 		if (types.length === 1) {
 			return this.creg.get(this.eid, types[0]);
 		} else {
-			return all(types.map((t) => this.creg.get(this.eid, t)));
+			return Option.all(types.map((t) => this.creg.get(this.eid, t)));
 		}
 	}
 
@@ -187,6 +203,7 @@ export class EntityRegistry {
 	private entities: Option<Entity>[];
 	private nodes: Option<Tree<Entity>>[];
 	private tags: Set<EntityTag>[];
+	unique_tags: Set<symbol>;
 
 	constructor(private raxis: Raxis, private creg: ComponentRegistry, private queries: Map<Query, QueryResults>) {
 		this.allocator = new EidAllocator();
@@ -194,6 +211,7 @@ export class EntityRegistry {
 		this.entities = new Array<Option<Entity>>(1000).fill(none);
 		this.nodes = new Array<Option<Tree<Entity>>>(1000).fill(none);
 		this.tags = Array.from({ length: 1000 }, () => new Set());
+		this.unique_tags = new Set();
 	}
 
 	validateQueries(eid: Eid) {
