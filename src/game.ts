@@ -1,5 +1,6 @@
 import { AssetsPlugin } from './assets';
 import { CameraTag, InitPlugin, RendererTag } from './init';
+import { LevelPlugin } from './level';
 import { PlayerPlugin } from './player';
 import { Camera2d, CanvasRenderer, DefaultPlugin, Raxis, Tagged, Option } from './raxis';
 
@@ -13,6 +14,7 @@ function render(r: Raxis) {
 export const Game = new Raxis.Builder()
 	.use(DefaultPlugin)
 	.use(InitPlugin)
+	.use(LevelPlugin)
 	.use(AssetsPlugin)
 	.use(PlayerPlugin)
 	.useUpdate('postUpdate', render);

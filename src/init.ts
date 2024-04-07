@@ -1,6 +1,6 @@
-import { GameAssets, gameImageAssetsSource } from './assets';
-import { SpawnPlayerSignal } from './player';
-import { Camera2dBundle, CanvasRenderer, Raxis, Tagged, Transform, Vec2, load } from './raxis';
+import { GameAssets } from './assets';
+import { CreateNextLevelSignal } from './level';
+import { Camera2dBundle, CanvasRenderer, Raxis, Tagged, Transform, Vec2, load } from 'raxis';
 
 export const RendererTag: unique symbol = Symbol();
 function setupRenderer(r: Raxis) {
@@ -25,13 +25,10 @@ function setupCamera(r: Raxis) {
 async function loadAssets(r: Raxis) {
 	const renderer = r.query(CanvasRenderer, Tagged(RendererTag)).expectSingle();
 	const assets = r.global(GameAssets);
-	const source = gameImageAssetsSource;
 
-	for (const key in source) {
-		assets[key as keyof GameAssets] = await load(renderer, source[key as keyof GameAssets]);
-	}
+	assets['coin_hunter'] = await load(renderer, ['coin_hunter.png']);
 
-	r.dispatch(new SpawnPlayerSignal());
+	r.dispatch(new CreateNextLevelSignal());
 }
 
 export const InitPlugin = new Raxis.Builder().useStartup(setupRenderer, setupCamera, loadAssets);
