@@ -1,11 +1,12 @@
 import { Handle, Raxis } from './raxis';
-import { ImageAssetSrc } from './raxis/plugins/graphics/renderers/canvas';
 
 export class GameAssets {
 	coin_hunter: Handle<ImageBitmap[]> = undefined;
+
+	cell_images: Record<string, Handle<ImageBitmap[]>> = undefined;
 }
 
-export const gameImageAssetsSource: Record<keyof GameAssets, ImageAssetSrc> = {
+export const gameImageAssetsSource = {
 	coin_hunter: ['coin_hunter.png'],
 };
 
