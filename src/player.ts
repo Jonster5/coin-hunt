@@ -1,5 +1,5 @@
 import { GameAssets } from './assets';
-import { Raxis, Sprite, SpriteBundle, Texture, Transform, Vec2, KeydownEvent, With, TweenManager } from './raxis';
+import { Raxis, Sprite, SpriteBundle, Texture, Transform, Vec2, KeydownEvent, With, TweenManager } from 'raxis';
 
 export class SpawnPlayerSignal {
 	constructor() {}
