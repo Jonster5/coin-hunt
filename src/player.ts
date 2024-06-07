@@ -5,7 +5,9 @@ export class SpawnPlayerSignal {
 	constructor() {}
 }
 
-export class Player {}
+export class Player {
+	score: number = 0;
+}
 
 function disableSystems(r: Raxis) {
 	r.disable(playerMovement);
