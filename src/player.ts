@@ -6,13 +6,15 @@ export class SpawnPlayerSignal {
 	constructor() {}
 }
 
+export class Player {
+	score: number = 0;
+}
+
 export class MovePlayerSignal {}
 
 export class MapPos {
 	pos = new Vec2(24,25)
 }
-
-export class Player {}
 
 export class Arrow {
 	dest = 'none'
