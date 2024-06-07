@@ -88,6 +88,15 @@ export class TweenManager {
 				if (pending_index !== -1) this.pending.splice(pending_index, 1);
 			});
 	}
+
+	forceUpdateBasic(r: Raxis, label: string): void {
+		const tween = this.labeled_tweens.get(label)
+		if (tween === undefined) return;
+
+		tween.some((t) => {
+			t.update(r.global(Time).delta)
+		})
+	}
 }
 
 class BasicTween {
