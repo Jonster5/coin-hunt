@@ -3,6 +3,7 @@ import { GlobalTransform, Transform } from '../transform';
 import { Entity, HasNoParent, Raxis, Option } from '../..';
 import { Handle } from '../assets';
 import { ColorValue } from '../../structures';
+import { Renderable } from './renderers/canvas';
 
 export type SpriteAnchor =
 	| 'center'
@@ -50,7 +51,7 @@ export class GlobalVisibility {
 
 /** @Component */
 export class Texture {
-	material: Handle<ImageBitmap[]>;
+	material: Handle<Renderable>;
 	private index: number = 0;
 
 	animating: boolean = false;
@@ -65,7 +66,7 @@ export class Texture {
 		this.index = Math.floor(v);
 	}
 
-	constructor(material: Handle<ImageBitmap[]>, options: A.Compute<Partial<Omit<Texture, 'material'>>> = {}) {
+	constructor(material: Handle<Renderable>, options: A.Compute<Partial<Omit<Texture, 'material'>>> = {}) {
 		this.material = material;
 		Object.assign(this, options);
 	}
