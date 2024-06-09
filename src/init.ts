@@ -44,6 +44,7 @@ async function loadAssets(r: Raxis) {
 	const assets = r.global(GameAssets);
 
 	assets['coin_hunter'] = await load(renderer, ['coin_hunter.png']);
+	assets['coin'] = await load(renderer, ['coin_professional.png'])
 	assets['arrow'] = await load(renderer, ['arrow.png']);
 	assets['lava'] = await load(renderer, ['Textures/River/0004.png']);
 	assets['map_image'] = await load(renderer, map_image);

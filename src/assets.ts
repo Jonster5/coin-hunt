@@ -15,6 +15,7 @@ interface Textures {
 
 export class GameAssets {
 	coin_hunter: Handle<Renderable> = undefined;
+	coin: Handle<Renderable> = undefined;
 	lava: Handle<Renderable> = undefined;
 	arrow: Handle<Renderable> = undefined;
 	map_image: Handle<Renderable> = undefined;

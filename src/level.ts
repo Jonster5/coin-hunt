@@ -2,6 +2,7 @@ import { Raxis, SpriteBundle, SystemTimer, Texture, Transform, Vec2, With } from
 import { MovePlayerSignal, SpawnPlayerSignal } from './player';
 import { GameAssets } from './assets';
 import { LavaPulseSignal } from './lava';
+import { SpawnCoinSignal } from './coin';
 
 export class LevelDifficultyTracker {
 	difficulty = 1;
@@ -131,6 +132,7 @@ function createNextLevel(r: Raxis) {
 	}
 
 	r.dispatch(new SpawnPlayerSignal());
+	r.dispatch(new SpawnCoinSignal());
 }
 
 function MusicTick(r: Raxis) {

@@ -1,4 +1,5 @@
 import { AssetsPlugin } from './assets';
+import { CoinPlugin } from './coin';
 import { CameraTag, InitPlugin, RendererTag } from './init';
 import { LavaPlugin } from './lava';
 import { LevelPlugin } from './level';
@@ -19,4 +20,5 @@ export const Game = new Raxis.Builder()
 	.use(AssetsPlugin)
 	.use(PlayerPlugin)
 	.use(LavaPlugin)
+	.use(CoinPlugin)
 	.useUpdate('postUpdate', render);
